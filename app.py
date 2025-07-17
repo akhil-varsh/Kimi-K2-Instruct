@@ -1,10 +1,9 @@
 import streamlit as st
 from groq import Groq
 
-# Streamlit page configuration
 st.set_page_config(page_title="Kimi-K2-Instruct Chatbot", page_icon="🤖", layout="wide")
 
-# Custom CSS for better UI
+
 st.markdown("""
     <style>
     .main {
@@ -40,7 +39,7 @@ st.markdown("""
 
 
 
-# Sidebar for API key and info
+
 with st.sidebar:
     st.image("https://kimik2.net/logo.png", width=48)
     st.header("Kimi-K2-Instruct Chatbot 🤖")
@@ -54,15 +53,15 @@ with st.sidebar:
     st.markdown("[Model Info](https://console.groq.com/docs/model/moonshotai/kimi-k2-instruct)")
     st.markdown("[Contact Support](mailto:support@moonshot.cn)")
 
-# Initialize session state for chat history
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Main UI
+
 st.title("Kimi-K2-Instruct Chatbot")
 st.markdown("Chat with Moonshot AI's Kimi-K2-Instruct model using the Groq API.")
 
-# Initialize the Groq client
+
 client = None
 if groq_api_key:
     try:
@@ -71,7 +70,7 @@ if groq_api_key:
     except Exception as e:
         st.error(f"Failed to connect to Groq API: {str(e)}")
 
-# Chat input area
+
 st.markdown("#### Your Message")
 col1, col2 = st.columns([5, 1])
 with col1:
@@ -79,7 +78,7 @@ with col1:
 with col2:
     send_clicked = st.button("Send", use_container_width=True, disabled=not groq_api_key or not user_input)
 
-# Handle sending message
+
 if send_clicked:
     if client and user_input:
         st.session_state.messages.append({"role": "user", "content": user_input})
@@ -119,7 +118,7 @@ if send_clicked:
                 - Contact support@moonshot.cn for model availability updates.
             """)
 
-# Display chat history with bubbles
+
 st.markdown("#### Chat History")
 for message in st.session_state.messages:
     if message["role"] == "user":
@@ -133,7 +132,7 @@ for message in st.session_state.messages:
             unsafe_allow_html=True
         )
 
-# Instructions for deployment
+
 with st.expander("How to Deploy on Hugging Face Spaces"):
     st.markdown("""
     1. Create a new Space on Hugging Face (select Streamlit as SDK).
